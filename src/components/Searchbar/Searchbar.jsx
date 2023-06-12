@@ -10,15 +10,15 @@ export class Searchbar extends Component {
         event.preventDefault();
         this.props.onFormSubmit(this.state.serchImage)
     }
-    inputChanche = event => {
+    inputChange = event => {
         this.setState({
-            serchImage: event.currentTarget.value,
+            serchImage: event.currentTarget.value.toLowerCase(),
         })
     }
 
     render() {
   return (
-          <header className={css.serchbar}>
+          <header className={css.searchbar}>
               <form onSubmit={this.onFormSubmit} className={css.form}>
                 <button type="submit" className={css.button}>
                      <span className={css.label}>Search</span>
