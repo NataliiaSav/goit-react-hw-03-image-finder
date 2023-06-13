@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import css from './Serchbar.module.css'
+import css from './Searchbar.module.css'
 
 export class Searchbar extends Component {
     state = {
-        serchImage: '',
+        searchImage: '',
     }
     onFormSubmit = event => {
         event.preventDefault();
-        this.props.onFormSubmit(this.state.serchImage)
+        this.props.onFormSubmit(this.state.searchImage)
     }
     inputChange = event => {
         this.setState({
-            serchImage: event.currentTarget.value.toLowerCase(),
+            searchImage: event.currentTarget.value.toLowerCase(),
         })
     }
 
-    render() {
+  render() {
+    const { searchImage } = this.state
   return (
           <header className={css.searchbar}>
               <form onSubmit={this.onFormSubmit} className={css.form}>
@@ -26,9 +27,8 @@ export class Searchbar extends Component {
                   <input
                     onChange={this.inputChange}
                     className={css.input}
+                    value = {searchImage}
                     type="text"
-                    autocomplete="off"
-                    autofocus
                     placeholder="Search images and photos"
                 />
             </form>
