@@ -8,7 +8,7 @@ export class Searchbar extends Component {
     }
     onFormSubmit = event => {
         event.preventDefault();
-        this.props.onFormSubmit(this.state.searchImage)
+        this.props.onSubmit(this.state.searchImage)
     }
     inputChange = event => {
         this.setState({
