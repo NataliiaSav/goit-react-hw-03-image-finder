@@ -1,7 +1,7 @@
 import React from 'react';
 import css from './ImageGalleryItem.module.css'
 
-const ImageGaleryItem = ({ itemData, openModal }) => {
+export const ImageGalleryItem = ({ itemData, openModal }) => {
     const { webformatURL, largeImageURL, tags } = itemData;
     return (
         <li className ={css.galleryItem}>

@@ -5,6 +5,7 @@ import {fetchImages} from '../services/fetch'
 
 export class App extends Component {
   state = {
+    images: [],
     query: '',
     page: 1,
   }
@@ -32,7 +33,10 @@ if(page !== prevState.page || query!== prevState.query ){
           this.setState(({ isLoading }) => ({ isLoading: !isLoading }))
         );
     }
-}
+  }
+  openModal = () => {
+    
+  }
   onSubmit = query => {
     this.setState({ query });
   };
@@ -40,6 +44,7 @@ if(page !== prevState.page || query!== prevState.query ){
     return (
       <>
         <Searchbar onSubmit={this.onSubmit} />
+        <ImageGallery images={this.images} openModal = {this.openModal} />
       </>
     )
   }
