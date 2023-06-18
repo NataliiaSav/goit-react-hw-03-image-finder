@@ -1,50 +1,48 @@
 import React, { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
-import {fetchImages} from '../services/fetch'
+import { fetchImages } from '../services/fetch'
+import { ImageGallery } from './ImageGallary/ImageGallery';
 
 
 export class App extends Component {
   state = {
     images: [],
-    query: '',
+    searchImage: '',
     page: 1,
+    isLoading: false,
+    isModal: false,
+
   }
 
-  componentDidUpdate(prevProps, prevState) {
-   const { query, page } = this.state;
-
-if(page !== prevState.page || query!== prevState.query ){
-  fetchImages(query)
-    .then(({ hits, totalHits }) => {
-      const imagesArray = hits.map(hit => ({
-        id: hit.id,
-        smallImage: hit.webformatURL,
-        largeImage: hit.largeImageURL,
-      }));
-      return this.setState({
-        page: 1,
-        images: imagesArray,
-        imagesOnPage: imagesArray.length,
-        totalImages: totalHits,
-      });
-    })
-        .catch(error => this.setState({ error }))
-        .finally(() =>
-          this.setState(({ isLoading }) => ({ isLoading: !isLoading }))
-        );
+  componentDidUpdate(_, prevState) {
+   const { searchImage, page } = this.state;
+if(page !== prevState.page || searchImage!== prevState.searchImage ){
+  this.getImages(searchImage, page)
     }
   }
+  getImages = (text, page) => {
+    this.setState({ isLoading: true })
+    fetchImages(text, page).then(({ data }) => {
+      this.setState(prevState => ({
+        images: [...prevState.images, ...data.hits]
+      }))
+    }).catch(error => {
+      throw new Error(error)
+    }).finally(()=> {
+      this.setState ({ isLoading: false})
+    })
+}
   openModal = () => {
     
   }
-  onSubmit = query => {
-    this.setState({ query });
+  onSubmit = searchImage => {
+    this.setState({ searchImage });
   };
   render() {
     return (
       <>
         <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery images={this.images} openModal = {this.openModal} />
+        {/* <ImageGallery images={this.images} openModal = {this.openModal} /> */}
       </>
     )
   }
