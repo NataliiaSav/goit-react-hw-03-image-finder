@@ -11,10 +11,6 @@ export const ImageGalleryItem = ({ itemData, openModal }) => {
     )
 }
 ImageGalleryItem.propTypes = {
-    itemData: PropTypes.exact({
-        webformatURL: PropTypes.string,
-        tags: PropTypes.string,
-        largeImageURL: PropTypes.string,
-    }),
-    onClick: PropTypes.func.isRequired,
+    itemData: PropTypes.arrayOf(PropTypes.shape).isRequired,
+    openModal: PropTypes.func.isRequired,
 };
