@@ -4,7 +4,7 @@ import css from './Modal.module.css';
 
 export default class Modal extends Component {
     handleOverlayClick = (event) => {
-        if (event.current.target === event.target) {
+        if (event.currentTarget === event.target) {
             this.props.closeModal();
         }
     }

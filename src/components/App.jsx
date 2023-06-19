@@ -3,6 +3,8 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { fetchImages } from '../services/fetch'
 import { ImageGallery } from './ImageGallary/ImageGallery';
 import Modal from './Modal/Modal';
+import  { Loader }  from './Loader/Loader';
+import { Button } from './Button/Button';
 
 
 export class App extends Component {
@@ -45,13 +47,25 @@ if(page !== prevState.page || searchImage!== prevState.searchImage ){
   onSubmit = searchImage => {
     this.setState({ searchImage });
   };
+  loadMore = () => {
+    const { page } = this.state
+    this.setState({ page: page + 1 })
+  };
   render() {
+    const {images, currentLargeImg, isLoading} = this.state
     return (
       <>
         <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery images={this.state.images} openModal={this.openModal} />
         
-        {<Modal imgLarge={this.state.currentLargeImg} closeModal={this.closeModal } />}
+        {images.length > 0 &&
+          <>
+          <ImageGallery images={images} openModal={this.openModal} />
+          <Button loadMore={this.loadMore}/>
+          </>}
+        {isLoading && <Loader />}
+        
+        {currentLargeImg && <Modal imgLarge={currentLargeImg} closeModal={this.closeModal} />}
+        
       </>
     )
   }
